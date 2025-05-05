@@ -1,47 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Título Modificado</title>
+    <title>Trabalho de Frameworks</title>
     <link rel="stylesheet" href="listagem.css">
+
 </head>
 <body>
-    <a href="./cadastro.html">Adicionar Ao Grimório</a>
-    <h1>Listar de Grimórios</h1>
-    <ul id="minhalista">
+    
+    <a href="/Cadrasto/cadastro.html">Adicionar Ao Grimóprio</a>
+    <h1>Consultar os Grimórios</h1>
+
+        <!--LUA-->
+
+            <div class="content">
+                <div class="lua-efeito"></div>
+            </div>
+            
+        <!--Fundo-->
+            <div class="container" id="container"></div>
+
 
     </ul>
-    <script>
-        async function buscaDados(){
-            const resposta = await fetch("http://localhost:8001/estudantes")
-            console.log(resposta)
-            if(resposta.status ===200){
-                const dados = await resposta.json()
-                console.log(dados)
-                console.log(dados[0].nome)
-                const ul = document.getElementById("minhalista")
-                for (let i = 0; i < dados.length; i++) {
-                    const element = dados[i];
-                    const novoli = document.createElement("li")
-                    novoli.innerText = element.nome
-                    ul.appendChild(novoli)
-                }
+    
+     <!--Configuração de fundo-->
 
-                //Criem li a partir do vetor dados
-                //Coloque o texto que vem do banco no li
-                //Adicione o li na ul com id "minhalista" 
-            }else{
-                if(resposta.status ===400){
-                    const dados = await resposta.json()
-                    alert(dados.mensagem)
-                }
-                else{
-                    alert("ERRO NÃO IDENTIFICADO");
-                }
-            }
+    <script>
+        const container = document.getElementById('container');
+        const numEstrelas = 150;
+      
+        for (let i = 0; i < numEstrelas; i++) {
+          const estrela = document.createElement('div');
+          estrela.classList.add('estrela');
+          estrela.style.left = Math.random() * 100 + 'vw';
+          estrela.style.top = Math.random() * 100 + 'vh';
+          estrela.style.animationDelay = Math.random() * 10 + 's';
+          container.appendChild(estrela);
         }
-        buscaDados()
+    </script>
+     
+     
+    <!-- BOTÃO -->
+
+    <div class="interface-superior">
+        <ul id="minhalista"></ul>
+      </div>
+      <button id="botaoListar">Listar Grimórios</button>
+      <button id="parardelistar">Parar de listar</button>
+    
+
+      </script>
+      <script>
+      async function buscaDados(){
+        const resposta = await fetch("http://localhost:8001/estudantes")
+        console.log(resposta)
+
+        if(resposta.status ===200){
+            const dados = await resposta.json()
+            console.log(dados)
+            console.log(dados[0].nome)
+
+            const ul = document.getElementById("minhalista")
+            ul.innerHTML = "" //limpar o campo antes de adicionar outro
+
+            for (let i = 0; i < dados.length; i++) {
+                const element = dados[i];
+                const novoli = document.createElement("li")
+                novoli.innerText = element.nome
+                ul.appendChild(novoli)
+            }
+
+        } else if(resposta.status === 400){
+            const dados = await resposta.json()
+            alert(dados.mensagem)
+        } else {
+            alert("ERRO NÃO IDENTIFICADO");
+        }
+    }
+
+    // OUVINTE DO BOTÃO
+    document.getElementById("botaoListar").addEventListener("click", buscaDados)
+
+
+
     </script>
 </body>
 </html>
