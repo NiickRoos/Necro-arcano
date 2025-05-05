@@ -83,7 +83,7 @@ app.post('/estudantes', async (request: FastifyRequest, reply: FastifyReply) => 
     }
 })
 
-app.listen({ port: 8001 }, (err, address) => {
+app.listen({host:"0.0.0.0" port: 8001 }, (err, address) => {
     if (err) {
         console.error(err)
         process.exit(1)
