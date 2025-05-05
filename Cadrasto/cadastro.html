@@ -12,28 +12,20 @@
     <form onsubmit="event.preventDefault();trataform()">
         <label for="Nome">Nome</label>
         <input type="text" id="Nome" name="Nome">
-
         <label for="Tipodeocorrencia">Tipo de ocorrencia</label>
         <input type="text" id="Tipodeocorrencia" name="Tipo de ocorrencia">
-
         <label for="Datadoevento">Data do evento</label>
         <input type="text" id="Datadoevento" name="Data do evento">
-
         <label for="Local">Local</label>
         <input type="text" id="Local" name="Local">
-
         <label for="EntidadesEnvolvidas">Entidades envolvidas</label>
         <input type="text" id="EntidadesEnvolvidas" name="Entidades envolvidas">
-
         <label for="Niveldeatividadeparanormal">Nivel de atividade paranormal</label>
         <input type="text" id="Niveldeatividadeparanormal" name="Nivel de atividade paranormal">
-
         <label for="Evidencias">Evidencias</label>
         <input type="text" id="Evidencias" name="Evidencias">
-
         <label for="RituaisRealizados">Rituais realizados</label>
         <input type="text" id="RituaisRealizados" name="Rituais realizados">
-
         <input type="submit" value="Cadastrar">
     </form>
     <script>
@@ -47,7 +39,6 @@
          const inputEvidencias = document.getElementById("Evidencias");
          const inputRituaisRealizados = document.getElementById("RituaisRealizados");
           
-    
          const Nome = inputNome.value
          const Tipodeocorrencia = inputTipodeocorrencia.value
          const Datadoevento = inputDatadoevento.value
@@ -86,7 +77,6 @@
                 if(resposta.status===404){
                     alert("Erro nao identificado.")
                 }
-
             }catch(erro){
                 alert("Erro: Erro na requisicao do FETCH\n"+
                  "Voce ligou o BACKEND com npm run dev???")
