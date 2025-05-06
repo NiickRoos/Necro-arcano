@@ -10,7 +10,7 @@
 </head>
 <body>
     
-    <a href="/Cadrasto/cadastro.html">Adicionar Ao Grimóprio</a>
+    <a href="cadastro.html">Adicionar Ao Grimóprio</a>
     <h1>Consultar os Grimórios</h1>
 
         <!--LUA-->
@@ -54,7 +54,7 @@
       </script>
       <script>
       async function buscaDados(){
-        const resposta = await fetch("http://localhost:8001/estudantes")
+        const resposta = await fetch("http://localhost:8000/Grimorio")
         console.log(resposta)
 
         if(resposta.status ===200){
