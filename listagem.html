@@ -60,7 +60,7 @@
         if(resposta.status ===200){
             const dados = await resposta.json()
             console.log(dados)
-            console.log(dados[0].nome)
+            console.log(dados[0].Nome)
 
             const ul = document.getElementById("minhalista")
             ul.innerHTML = "" //limpar o campo antes de adicionar outro
@@ -68,7 +68,7 @@
             for (let i = 0; i < dados.length; i++) {
                 const element = dados[i];
                 const novoli = document.createElement("li")
-                novoli.innerText = element.nome
+                novoli.innerText = element.Nome
                 ul.appendChild(novoli)
             }
 
