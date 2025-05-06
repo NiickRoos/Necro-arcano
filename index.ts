@@ -46,7 +46,7 @@ app.get('/Grimorio', async (request: FastifyRequest, reply: FastifyReply) => {
 });
 
 app.post('/Grimorio', async (request: FastifyRequest, reply: FastifyReply) => {
-    const { Nome, Tipodeocorrencia, Datadoevento, Local, EntidadesEnvolvidas, Niveldeatividadeparanormal, Evidencias, RituaisRealizados } = request.body as any;
+    const { Nome, Tipodeocorrencia, Datadoevento, lugar, EntidadesEnvolvidas, Niveldeatividadeparanormal, Evidencias, RituaisRealizados } = request.body as any;
     
     try {
         const conn = await mysql.createConnection({
@@ -58,8 +58,8 @@ app.post('/Grimorio', async (request: FastifyRequest, reply: FastifyReply) => {
         });
 
         // Inserir na tabela grimorio
-        const resultado = await conn.query("INSERT INTO grimorio (Nome, Tipodeocorrencia, Datadoevento, Local, EntidadesEnvolvidas, Niveldeatividadeparanormal, Evidencias, RituaisRealizados) VALUES (?,?,?,?,?,?,?,?)", 
-            [Nome, Tipodeocorrencia, Datadoevento, Local, EntidadesEnvolvidas, Niveldeatividadeparanormal, Evidencias, RituaisRealizados]);
+        const resultado = await conn.query("INSERT INTO informa (Nome, Tipodeocorrencia, Datadoevento, lugar, EntidadesEnvolvidas, Niveldeatividadeparanormal, Evidencias, RituaisRealizados) VALUES (?,?,?,?,?,?,?,?)", 
+            [Nome, Tipodeocorrencia, Datadoevento, lugar, EntidadesEnvolvidas, Niveldeatividadeparanormal, Evidencias, RituaisRealizados]);
         
         const [dados, camposTabela] = resultado;
         reply.status(200).send(dados);
