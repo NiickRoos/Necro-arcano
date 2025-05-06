@@ -4,55 +4,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro Grimório</title>
+    <title>Cadastro Grimorio</title>
     <link rel="stylesheet" href="cadastro.css">
 </head>
+
 <body>
     <form onsubmit="event.preventDefault();trataform()">
-        <label for="nome">nome</label>
-        <input type="text" id="nome" name="nome">
-        <label for="Data do evento">Data do evento </label>
-        <input type="text" id="Data do evento" name="Data do evento">
-        <label for="Tipo de ocorrencia(morte, pacto, aparicao)">Tipo de ocorrencia (morte, pacto, aparicao)</label>
-        <input type="text" id="Tipo de ocorrencia(morte, pacto, aparicao)" name="Tipo de ocorrencia(morte, pacto, aparicao)">
-        <label for="Nivel da atividade paranormal"> </label>
-        <input type="text" id="" name="">
+        <label for="id">ID</label>
+        <input type="text" id="id" name="id">        
+        <label for="Nome">Nome</label>
+        <input type="text" id="Nome" name="Nome">
+        <label for="Tipodeocorrencia">Tipo de ocorrencia</label>
+        <input type="text" id="Tipodeocorrencia" name="Tipo de ocorrencia">
+        <label for="Datadoevento">Data do evento</label>
+        <input type="text" id="Datadoevento" name="Data do evento">
+        <label for="Local">Local</label>
+        <input type="text" id="Local" name="Local">
+        <label for="EntidadesEnvolvidas">Entidades envolvidas</label>
+        <input type="text" id="EntidadesEnvolvidas" name="Entidades envolvidas">
+        <label for="Niveldeatividadeparanormal">Nivel de atividade paranormal</label>
+        <input type="text" id="Niveldeatividadeparanormal" name="Nivel de atividade paranormal">
+        <label for="Evidencias">Evidencias</label>
+        <input type="text" id="Evidencias" name="Evidencias">
+        <label for="RituaisRealizados">Rituais realizados</label>
+        <input type="text" id="RituaisRealizados" name="Rituais realizados">
         <input type="submit" value="Cadastrar">
     </form>
     <script>
-        async function trataform() {
-            const inputId = document.getElementById("id")
-            const inputNome = document.getElementById("nome")
-            const id = inputId.value
-            const nome = inputNome.value
+            async function trataform() {
+            const inputId = document.getElementById("id");
+            const inputNome = document.getElementById("Nome");
+            const inputTipodeocorrencia = document.getElementById("Tipodeocorrencia");
+            const inputDatadoevento = document.getElementById("Datadoevento");
+            const inputLocal = document.getElementById("Local");
+            const inputEntidadesEnvolvidas = document.getElementById("EntidadesEnvolvidas");
+            const inputNiveldeatividadeparanormal = document.getElementById("Niveldeatividadeparanormal");
+            const inputEvidencias = document.getElementById("Evidencias");
+            const inputRituaisRealizados = document.getElementById("RituaisRealizados");
 
-            const objEstudante = {
+            const id = inputId.value;
+            const Nome = inputNome.value;
+            const Tipodeocorrencia = inputTipodeocorrencia.value;
+            const Datadoevento = inputDatadoevento.value;
+            const Local = inputLocal.value;
+            const EntidadesEnvolvidas = inputEntidadesEnvolvidas.value;
+            const Niveldeatividadeparanormal = inputNiveldeatividadeparanormal.value;
+            const Evidencias = inputEvidencias.value;
+            const RituaisRealizados = inputRituaisRealizados.value;
+
+            const objGrimorio = {
                 id,
-                nome
-            }
+                Nome,
+                Tipodeocorrencia,
+                Datadoevento,
+                Local,
+                EntidadesEnvolvidas,
+                Niveldeatividadeparanormal,
+                Evidencias,
+                RituaisRealizados
+            };
             try{
-                const resposta = await fetch("http://localhost:8000/estudantes",{
+                const resposta = await fetch("http://localhost:8000/Grimorio",{
                     headers:{
                         'Content-Type': 'application/json'
                     },
                     method:"POST",
-                    body: JSON.stringify(objEstudante)
+                    body: JSON.stringify(objGrimorio)
                 })
 
                 if(resposta.status===200){
-                    alert("Estudante cadastrado com sucesso!")
+                    alert("Dados cadastrados com sucesso!!!")
                 }
                 if(resposta.status===400){
                     const dados = await resposta.json()
                     alert(`Erro do lado do backend:"\n${dados.mensagem}`)
                 }
                 if(resposta.status===404){
-                    alert("Erro não identificado.")
+                    alert("Erro nao identificado.")
                 }
-
             }catch(erro){
-                alert("Erro: Erro na requisição do FETCH\n"+
-                 "Você ligou o BACKEND com npm run dev?")
+                alert("Erro: Erro na requisicao do FETCH\n"+
+                 "Voce ligou o BACKEND com npm run dev???")
             }
         }
     </script>
