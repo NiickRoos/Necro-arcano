@@ -1,62 +1,69 @@
 import mysql, { Connection, ConnectionOptions } from 'mysql2/promise';
-import fastify, { FastifyRequest, FastifyReply } from 'fastify'
-import cors from '@fastify/cors'
-const app = fastify()
-app.register(cors)
+import fastify, { FastifyRequest, FastifyReply } from 'fastify';
+import cors from '@fastify/cors';
+
+const app = fastify();
+app.register(cors);
 
 app.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
-    reply.send("Fastify Funcionando")
-})
-app.get('/estudantes', async (request: FastifyRequest, reply: FastifyReply) => {
+    reply.send("Fastify Funcionando");
+});
+
+app.get('/Grimorio', async (request: FastifyRequest, reply: FastifyReply) => {
     try {
-        const conn =  await mysql.createConnection({
+        const conn = await mysql.createConnection({
             host: "localhost",
             user: 'root',
             password: "",
-            database: 'banco1023a',
+            database: 'grimorio',
             port: 3306
-        })
-        const resultado =  await conn.query("SELECT * FROM estudantes")
-        const [dados, camposTabela] = resultado
-        reply.status(200).send(dados)
-    }
-    catch (erro: any) {
+        });
+
+        const resultado = await conn.query("SELECT * FROM informa");
+        const [dados, camposTabela] = resultado;
+        reply.status(200).send(dados);
+    } catch (erro: any) {
         if (erro.code === 'ECONNREFUSED') {
-            console.log("ERRO: LIGUE O LARAGAO => Conexão Recusada")
-            reply.status(400).send({mensagem:"ERRO: LIGUE O LARAGAO => Conexão Recusada"})
+            console.log("ERRO: LIGUE O LARAGÃO => Conexão Recusada");
+            reply.status(400).send({ mensagem: "ERRO: LIGUE O LARAGÃO => Conexão Recusada" });
         } else if (erro.code === 'ER_BAD_DB_ERROR') {
-            console.log("ERRO: CRIE UM BANCO DE DADOS COM O NOME DEFINIDO NA CONEXÃO")
-            reply.status(400).send({mensagem:"ERRO: CRIE UM BANCO DE DADOS COM O NOME DEFINIDO NA CONEXÃO"})
+            console.log("ERRO: CRIE UM BANCO DE DADOS COM O NOME DEFINIDO NA CONEXÃO");
+            reply.status(400).send({ mensagem: "ERRO: CRIE UM BANCO DE DADOS COM O NOME DEFINIDO NA CONEXÃO" });
         } else if (erro.code === 'ER_ACCESS_DENIED_ERROR') {
-            console.log("ERRO: CONFERIR O USUÁRIO E SENHA DEFINIDOS NA CONEXÃO")
-            reply.status(400).send({mensagem:"ERRO: CONFERIR O USUÁRIO E SENHA DEFINIDOS NA CONEXÃO"})
+            console.log("ERRO: CONFERIR O USUÁRIO E SENHA DEFINIDOS NA CONEXÃO");
+            reply.status(400).send({ mensagem: "ERRO: CONFERIR O USUÁRIO E SENHA DEFINIDOS NA CONEXÃO" });
         } else if (erro.code === 'ER_NO_SUCH_TABLE') {
-            console.log("ERRO: Você deve criar a tabela com o mesmo nome da sua QUERY")
-            reply.status(400).send({mensagem:"ERRO: Você deve criar a tabela com o mesmo nome da sua QUERY"})
+            console.log("ERRO: Você deve criar a tabela com o mesmo nome da sua QUERY");
+            reply.status(400).send({ mensagem: "ERRO: Você deve criar a tabela com o mesmo nome da sua QUERY" });
         } else if (erro.code === 'ER_PARSE_ERROR') {
-            console.log("ERRO: Você tem um erro de escrita em sua QUERY confira: VÍRGULAS, PARENTESES E NOME DE COLUNAS")
-            reply.status(400).send({mensagem:"ERRO: Você tem um erro de escrita em sua QUERY confira: VÍRGULAS, PARENTESES E NOME DE COLUNAS"})
+            console.log("ERRO: Você tem um erro de escrita em sua QUERY, confira: VÍRGULAS, PARENTESES E NOME DE COLUNAS");
+            reply.status(400).send({ mensagem: "ERRO: Você tem um erro de escrita em sua QUERY, confira: VÍRGULAS, PARENTESES E NOME DE COLUNAS" });
         } else {
-            console.log(erro)
-            reply.status(400).send({mensagem:"ERRO: NÃO IDENTIFICADO"})
+            console.log(erro);
+            reply.status(400).send({ mensagem: "ERRO: NÃO IDENTIFICADO" });
         }
     }
-})
-app.post('/estudantes', async (request: FastifyRequest, reply: FastifyReply) => {
-    const {id,nome} = request.body as any
+});
+
+app.post('/Grimorio', async (request: FastifyRequest, reply: FastifyReply) => {
+    const { Nome, Tipodeocorrencia, Datadoevento, Local, EntidadesEnvolvidas, Niveldeatividadeparanormal, Evidencias, RituaisRealizados } = request.body as any;
+    
     try {
-        const conn =  await mysql.createConnection({
+        const conn = await mysql.createConnection({
             host: "localhost",
             user: 'root',
             password: "",
-            database: 'banco1023a',
+            database: 'grimorio',
             port: 3306
-        })
-        const resultado =  await conn.query("INSERT INTO estudantes (id,nome) VALUES (?,?)",[id,nome])
-        const [dados, camposTabela] = resultado
-        reply.status(200).send(dados)
-    }
-    catch (erro: any) {
+        });
+
+        // Inserir na tabela grimorio
+        const resultado = await conn.query("INSERT INTO grimorio (Nome, Tipodeocorrencia, Datadoevento, Local, EntidadesEnvolvidas, Niveldeatividadeparanormal, Evidencias, RituaisRealizados) VALUES (?,?,?,?,?,?,?,?)", 
+            [Nome, Tipodeocorrencia, Datadoevento, Local, EntidadesEnvolvidas, Niveldeatividadeparanormal, Evidencias, RituaisRealizados]);
+        
+        const [dados, camposTabela] = resultado;
+        reply.status(200).send(dados);
+    } catch (erro: any) {
         switch (erro.code) {
             case "ECONNREFUSED":
                 console.log("ERRO: LIGUE O LARAGÃO!!! CABEÇA!");
@@ -76,17 +83,16 @@ app.post('/estudantes', async (request: FastifyRequest, reply: FastifyReply) => 
                 break;
             default:
                 console.log(erro);
-                reply.status(400).send({ mensagem: "ERRO DESCONHECIDO OLHE O TERMINAL DO BACKEND" });
+                reply.status(400).send({ mensagem: "ERRO DESCONHECIDO, OLHE O TERMINAL DO BACKEND" });
                 break;
         }
-    
     }
-})
+});
 
-app.listen({host:"0.0.0.0" port: 8001 }, (err, address) => {
+app.listen({ port: 8000 }, (err, address) => {
     if (err) {
-        console.error(err)
-        process.exit(1)
+        console.error(err);
+        process.exit(1);
     }
-    console.log(`Server listening at ${address}`)
-})
+    console.log(`Server listening at ${address}`);
+});
