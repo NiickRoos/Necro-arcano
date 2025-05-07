@@ -1,38 +1,37 @@
- 
-    
-h1{
+h1 {
     color: beige;
-    
 }
 
-
-.content{
+.content {
     margin: 0px;
     margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px; /* Ajuste a altura da lua */
 }
-.lua-efeito{
-  width: 250px;
-  height: 250px;
-  border-radius: 100%;
-  background: rgb(70, 68, 68) ;
-  margin: auto;
-  box-shadow: 0 0 60px whitesmoke;
 
+.lua-efeito {
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+    background: rgb(70, 68, 68);
+    margin: auto;
+    box-shadow: 0 0 60px whitesmoke;
+    animation: piscar 3s infinite; /* Lua piscando */
 }
-@keyframes piscar{
-    0%{
+
+@keyframes piscar {
+    0% {
         opacity: 1;
     }
-    50%{
+    50% {
         opacity: 0.5;
     }
-    100%{
+    100% {
         opacity: 1;
     }
 }
-
-
-
 
 body, html {
     margin: 0;
@@ -40,109 +39,192 @@ body, html {
     width: 100%;
     height: 100%;
     background-color: rgb(10, 10, 10);
-    overflow: hidden; 
+    overflow-x: hidden;
 }
 
-  
 .container {
     width: 100vw;
     height: 100vh;
-    position: absolute; /* Em vez de relative */
+    position: absolute;
     top: 0;
     left: 0;
-    z-index: 0; /* Fica atrás dos elementos */
+    z-index: 0;
 }
 
-  
-  .estrela {
+.estrela {
     position: absolute;
     width: 2px;
     height: 2px;
     background: white;
     border-radius: 50%;
     animation: subir 10s linear infinite;
-  }
-  
-  @keyframes subir {
+}
+
+@keyframes subir {
     from {
-      transform: translateY(0);
+        transform: translateY(0);
     }
     to {
-      transform: translateY(-100vh);
+        transform: translateY(-100vh);
     }
-  }
-  
-  #botaoListar {
-    padding: 10px 20px;
+}
+
+.botao-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 30px auto 20px auto;
+    width: 100%;
+    max-width: 1200px;
+    z-index: 10;
+}
+
+#botaoListar, #parardelistar {
+    padding: 12px 24px;
     font-size: 16px;
     background-color: #2e1a1a;
     color: #f1f1f1;
     border: 2px solid #570000;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
-    position: absolute; /* Mudança para absolute */
-    top: 50%; /* Centraliza verticalmente */
-    left: 50%; /* Centraliza horizontalmente */
-    transform: translate(-50%, -50%); /* Ajusta o centro exato */
-    z-index: 1000;
-    margin-top: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    font-family: 'Creepster', cursive, sans-serif;
 }
 
-#botaoListar:hover {
+#botaoListar:hover, #parardelistar:hover {
     background-color: #570000;
-    transform: scale(1.1) translate(-50%, -50%); /* Efeito de aumento, mantendo a centralização */
+    transform: scale(1.05);
     box-shadow: 0 0 30px rgba(255, 0, 0, 0.7);
 }
 
-ul {
-    margin-top: 20px;
-    padding-left: 20px;
-    list-style: none;
-    background-color: #1b1010;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-    padding: 10px;
-}
-
-li {
-    margin: 5px 0;
-    color: #ccc;
-    font-family: 'Creepster', cursive;
-    width: 100%;
-    text-align: center;
-}
-
-
-li:nth-child(even) {
-    background-color: #2d1b1b;
-}
-
-li:hover {
-    color: #ff6347;
-    text-shadow: 0 0 10px #ff0000;
-}
 .interface-superior {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px; /* Espaço entre lua e botão */
+    margin-top: 20px;
     position: relative;
     z-index: 10;
-   
 }
+
+/* === NOVO ESTILO PARA TABELA MÁGICA === */
+
 #minhalista {
-    margin-top: 10px;
-    padding: 15px;
-    width: 200px;
-    background-color: #1b1010;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
     margin-top: 180px;
+    padding: 15px;
+    width: 100%;
+    max-width: 95%;
+    overflow-x: auto;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tabela-magica {
+    width: 100%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    background: #1b1010;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+    color: #f0e6e6;
+    font-family: 'Creepster', cursive, sans-serif;
+}
+
+.tabela-magica th,
+.tabela-magica td {
+    padding: 12px;
+    border: 1px solid #331212;
+    text-align: center;
+    word-break: break-word;
+}
+
+.tabela-magica th {
+    background-color: #2e1a1a;
+    color: #ffb3b3;
+    font-size: 18px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.tabela-magica tbody tr:nth-child(even) {
+    background-color: #2d1b1b;
+}
+
+.tabela-magica tbody tr:hover {
+    background-color: #570000;
+    color: #fff;
+    text-shadow: 0 0 10px red;
+    transition: 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+    .tabela-magica {
+        font-size: 12px;
+    }
+
+    .tabela-magica th,
+    .tabela-magica td {
+        padding: 6px;
+    }
+
+    #minhalista {
+        padding: 0 5px;
+    }
+}
+/* === Barra de Navegação Superior === */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #2e1a1a;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    font-family: 'Creepster', cursive, sans-serif;
+}
+
+.navbar a {
+    color: #f1f1f1;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #570000;
+    color: #fff;
+}
+
+/* === Rodapé Fixo === */
+.footer {
+    background-color: #2e1a1a;
+    color: #f1f1f1;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    font-family: 'Creepster', cursive, sans-serif;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Adicionando um leve efeito para o texto no rodapé */
+.footer p:hover {
+    color: #ffb3b3;
+    text-shadow: 0 0 5px red;
 }

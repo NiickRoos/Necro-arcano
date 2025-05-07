@@ -1,90 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trabalho de Frameworks</title>
     <link rel="stylesheet" href="listagem.css">
-
 </head>
 <body>
-    
-    <a href="cadastro.html">Adicionar Ao Grimóprio</a>
+    <!-- Barra de navegação superior -->
+    <div class="navbar">
+        <a href="cadastro.html">Adicionar Ao Grimório</a>
+
+    </div>
+
     <h1>Consultar os Grimórios</h1>
 
-        <!--LUA-->
+    <div class="interface-superior">
+        <div class="botao-container">
+            <button id="botaoListar">Listar Grimórios</button>
+            <button id="parardelistar">Parar de listar</button>
+        </div>
+        <div class="content">
+            <div class="lua-efeito"></div>
+        </div>
+        <ul id="minhalista"></ul>
+    </div>
 
-            <div class="content">
-                <div class="lua-efeito"></div>
-            </div>
-            
-        <!--Fundo-->
-            <div class="container" id="container"></div>
+    <!-- Fundo -->
+    <div class="container" id="container"></div>
 
-
-    </ul>
-    
-     <!--Configuração de fundo-->
+    <!-- Rodapé fixo -->
+    <div class="footer">
+        <p>© 2025 Trabalho de Frameworks - Todos os direitos reservados.</p>
+    </div>
 
     <script>
         const container = document.getElementById('container');
         const numEstrelas = 150;
-      
+
+        // Criar estrelas no fundo
         for (let i = 0; i < numEstrelas; i++) {
-          const estrela = document.createElement('div');
-          estrela.classList.add('estrela');
-          estrela.style.left = Math.random() * 100 + 'vw';
-          estrela.style.top = Math.random() * 100 + 'vh';
-          estrela.style.animationDelay = Math.random() * 10 + 's';
-          container.appendChild(estrela);
+            const estrela = document.createElement('div');
+            estrela.classList.add('estrela');
+            estrela.style.left = Math.random() * 100 + 'vw';
+            estrela.style.top = Math.random() * 100 + 'vh';
+            estrela.style.animationDelay = Math.random() * 10 + 's';
+            container.appendChild(estrela);
         }
     </script>
-     
-     
-    <!-- BOTÃO -->
 
-    <div class="interface-superior">
-        <ul id="minhalista"></ul>
-      </div>
-      <button id="botaoListar">Listar Grimórios</button>
-      <button id="parardelistar">Parar de listar</button>
-    
+    <script>
+        // Função para buscar dados do servidor
+        async function buscaDados(){
+            const resposta = await fetch("http://localhost:8000/Grimorio");
+            console.log(resposta);
 
-      </script>
-      <script>
-      async function buscaDados(){
-        const resposta = await fetch("http://localhost:8000/Grimorio")
-        console.log(resposta)
+            if (resposta.status === 200) {
+                const dados = await resposta.json();
+                console.log(dados);
 
-        if(resposta.status ===200){
-            const dados = await resposta.json()
-            console.log(dados)
-            console.log(dados[0].Nome)
+                const ul = document.getElementById("minhalista");
+                ul.innerHTML = `
+                    <table class="tabela-magica">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Tipo de Ocorrência</th>
+                                <th>Lugar</th>
+                                <th>Data</th>
+                                <th>Entidades</th>
+                                <th>Atividade Paranormal</th>
+                                <th>Evidências</th>
+                                <th>Rituais</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpo-tabela"></tbody>
+                    </table>
+                `;
 
-            const ul = document.getElementById("minhalista")
-            ul.innerHTML = "" //limpar o campo antes de adicionar outro
+                const corpoTabela = document.getElementById("corpo-tabela");
 
-            for (let i = 0; i < dados.length; i++) {
-                const element = dados[i];
-                const novoli = document.createElement("li")
-                novoli.innerText = element.Nome
-                ul.appendChild(novoli)
+                // Adicionar as linhas na tabela
+                for (let i = 0; i < dados.length; i++) {
+                    const element = dados[i];
+                    const linha = document.createElement("tr");
+                    linha.innerHTML = `
+                        <td>${element.id}</td>
+                        <td>${element.Nome}</td>
+                        <td>${element.Tipodeocorrencia}</td>
+                        <td>${element.lugar}</td>
+                        <td>${new Date(element.Datadoevento).toLocaleDateString()}</td>
+                        <td>${element.EntidadesEnvolvidas}</td>
+                        <td>${element.Niveldeatividadeparanormal}</td>
+                        <td>${element.Evidencias}</td>
+                        <td>${element.RituaisRealizados}</td>
+                    `;
+                    corpoTabela.appendChild(linha);
+                }
+
+            } else if (resposta.status === 400) {
+                const dados = await resposta.json();
+                alert(dados.mensagem);
+            } else {
+                alert("ERRO NÃO IDENTIFICADO");
             }
-
-        } else if(resposta.status === 400){
-            const dados = await resposta.json()
-            alert(dados.mensagem)
-        } else {
-            alert("ERRO NÃO IDENTIFICADO");
         }
-    }
 
-    // OUVINTE DO BOTÃO
-    document.getElementById("botaoListar").addEventListener("click", buscaDados)
+        // Função para parar de listar
+        function pararDeListar() {
+            const ul = document.getElementById("minhalista");
+            ul.innerHTML = ''; // Limpar a lista quando "Parar de listar" for pressionado
+        }
 
-
-
+        // Ouvintes para os botões
+        document.getElementById("botaoListar").addEventListener("click", buscaDados);
+        document.getElementById("parardelistar").addEventListener("click", pararDeListar);
     </script>
 </body>
 </html>
