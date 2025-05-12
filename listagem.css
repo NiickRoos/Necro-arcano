@@ -1,38 +1,3 @@
-h1 {
-    color: beige;
-}
-
-.content {
-    margin: 0px;
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 250px; /* Ajuste a altura da lua */
-}
-
-.lua-efeito {
-    width: 250px;
-    height: 250px;
-    border-radius: 100%;
-    background: rgb(70, 68, 68);
-    margin: auto;
-    box-shadow: 0 0 60px whitesmoke;
-    animation: piscar 3s infinite; /* Lua piscando */
-}
-
-@keyframes piscar {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
 body, html {
     margin: 0;
     padding: 0;
@@ -42,31 +7,52 @@ body, html {
     overflow-x: hidden;
 }
 
-.container {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
+h1 {
+    color: beige;
+    margin-top: 120px;
+    text-align: center;
+    font-family: 'Creepster', cursive, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2e1a1a;
+    padding: 10px 20px;
+    position: fixed;
     top: 0;
     left: 0;
-    z-index: 0;
+    right: 0;
+    z-index: 1000;
+    font-family: 'Creepster', cursive, sans-serif;
 }
 
-.estrela {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: white;
+.navbar a {
+    padding: 12px 24px;
+    background-color: #570000;
+    color: #f1f1f1;
+    text-decoration: none;
+    border-radius: 6px;
+    font-family: 'Creepster', cursive, sans-serif;
+    font-size: 18px;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+.navbar a:hover {
+    background-color: #8a0000;
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.7);
+}
+
+.logo {
+    height: 100px;
+    width: 100px;
     border-radius: 50%;
-    animation: subir 10s linear infinite;
-}
-
-@keyframes subir {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-100vh);
-    }
+    object-fit: cover;
+    margin-right: 15px;
 }
 
 .botao-container {
@@ -74,7 +60,7 @@ body, html {
     justify-content: center;
     gap: 15px;
     flex-wrap: wrap;
-    margin: 30px auto 20px auto;
+    margin: 20px auto;
     width: 100%;
     max-width: 1200px;
     z-index: 10;
@@ -103,15 +89,72 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
     position: relative;
     z-index: 10;
 }
 
-/* === NOVO ESTILO PARA TABELA MÁGICA === */
+.content {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+}
 
+.lua-efeito {
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+    background: rgb(70, 68, 68);
+    box-shadow: 0 0 60px whitesmoke;
+    animation: piscar 3s infinite;
+}
+
+@keyframes piscar {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.estrela {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: subir 10s linear infinite;
+}
+
+@keyframes subir {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100vh); }
+}
+
+/* Rodapé fixo */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #241414;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: 'Creepster', cursive, sans-serif;
+    z-index: 1000;
+}
+
+/* Ajuste da altura da tabela e rolagem */
 #minhalista {
-    margin-top: 180px;
+    margin-top: 30px;
     padding: 15px;
     width: 100%;
     max-width: 95%;
@@ -120,6 +163,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 60px; /* Espaço para o rodapé */
 }
 
 .tabela-magica {
@@ -132,10 +176,11 @@ body, html {
     box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
     color: #f0e6e6;
     font-family: 'Creepster', cursive, sans-serif;
+    max-height: calc(100vh - 180px); /* Define altura máxima considerando navbar e rodapé */
+    overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
 }
 
-.tabela-magica th,
-.tabela-magica td {
+.tabela-magica th, .tabela-magica td {
     padding: 12px;
     border: 1px solid #331212;
     text-align: center;
@@ -162,69 +207,14 @@ body, html {
     transition: 0.3s;
 }
 
+/* Ajuste para telas menores */
 @media screen and (max-width: 768px) {
     .tabela-magica {
         font-size: 12px;
     }
-
-    .tabela-magica th,
-    .tabela-magica td {
-        padding: 6px;
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
     }
-
-    #minhalista {
-        padding: 0 5px;
-    }
-}
-/* === Barra de Navegação Superior === */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    background-color: #2e1a1a;
-    padding: 10px 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    font-family: 'Creepster', cursive, sans-serif;
-}
-
-.navbar a {
-    color: #f1f1f1;
-    font-size: 18px;
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.navbar a:hover {
-    background-color: #570000;
-    color: #fff;
-}
-
-/* === Rodapé Fixo === */
-.footer {
-    background-color: #2e1a1a;
-    color: #f1f1f1;
-    text-align: center;
-    padding: 15px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    font-family: 'Creepster', cursive, sans-serif;
-}
-
-.footer p {
-    margin: 0;
-    font-size: 14px;
-}
-
-/* Adicionando um leve efeito para o texto no rodapé */
-.footer p:hover {
-    color: #ffb3b3;
-    text-shadow: 0 0 5px red;
 }

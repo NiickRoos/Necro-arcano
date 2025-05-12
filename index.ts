@@ -3,7 +3,10 @@ import fastify, { FastifyRequest, FastifyReply } from 'fastify';
 import cors from '@fastify/cors';
 
 const app = fastify();
-app.register(cors);
+app.register(cors, {
+    origin: '*',
+    methods: ['GET', 'POST', 'DELETE']
+  });
 
 app.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
     reply.send("Fastify Funcionando");
@@ -95,4 +98,30 @@ app.listen({ port: 8000, host: '0.0.0.0' }, (err, address) => {
         process.exit(1);
     }
     console.log(`Server listening at ${address}`);
+});
+
+app.delete('/Grimorio/:id', async (request: FastifyRequest, reply: FastifyReply) => {
+    const { id } = request.params as { id: string };
+
+    try {
+        const conn = await mysql.createConnection({
+            host: "localhost",
+            user: 'root',
+            password: "",
+            database: 'grimorio',
+            port: 3306
+        });
+
+        const resultado = await conn.query("DELETE FROM informa WHERE id = ?", [id]);
+        const [dados] = resultado;
+
+        if ((dados as any).affectedRows === 0) {
+            reply.status(404).send({ mensagem: "Grimório não encontrado" });
+        } else {
+            reply.status(200).send({ mensagem: "Grimório excluído com sucesso!" });
+        }
+    } catch (erro: any) {
+        console.error(erro);
+        reply.status(500).send({ mensagem: "Erro ao excluir Grimório" });
+    }
 });
