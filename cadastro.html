@@ -9,6 +9,8 @@
 </head>
 
 <body>
+    <a href="listagem.html" class="botao-voltar">Voltar</a>
+    <div class="container" id="estrelas-container"></div>
     <form onsubmit="event.preventDefault();trataform()">
         <label for="id">ID</label>
         <input type="text" id="id" name="id">        
@@ -88,6 +90,19 @@
             }
         }
     </script>
+    <script>
+        const container = document.getElementById("estrelas-container");
+        for (let i = 0; i < 200; i++) {
+          const estrela = document.createElement("div");
+          estrela.classList.add("estrela");
+          estrela.style.left = Math.random() * 200 + "vw";
+          estrela.style.top = Math.random() * 200 + "vh";
+          estrela.style.animationDuration = (5 + Math.random() * 5) + "s";
+          container.appendChild(estrela);
+        }
+      </script>
+     
+      
 </body>
 
 </html>
