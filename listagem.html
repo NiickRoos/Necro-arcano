@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Trabalho de Frameworks</title>
-    <link rel="stylesheet" href="listagem.css">
+    <link rel="stylesheet" href="listagem.css" />
 </head>
 <body>
-    <!-- Barra de navegação superior -->
-    <div class="navbar">
-        <a href="cadastro.html">Adicionar Ao Grimório</a>
-        <img src="/Imagens/Necro-Arcano.png" alt="Logo" class="logo">
-    </div>
-    
-    <h1>Consultar os Grimórios</h1>
 
+    <!-- Barra de navegação superior -->
+    <nav>
+        <div class="cabecalho">Grimório</div>
+        <ul>
+            <li><a href="usuabilidade.html">Bem-vindo</a></li>
+            <li><a href="listagem.html">Ver grimorios</a></li>
+            <li><a href="cadastro.html">Adicionar grimorios</a></li>
+            <li><a href="#lembretes">Lembretes</a></li>
+        </ul>
+    </nav>
+
+    <!-- Sidebar lateral -->
+    <aside class="sidebar">
+    <button id="botaoListar">Listar Grimórios</button>
+    <button id="parardelistar">Parar de listar</button>
+</aside>
+
+
+    <!-- Conteúdo principal -->
     <div class="interface-superior">
-        <div class="botao-container">
-            <button id="botaoListar">Listar Grimórios</button>
-            <button id="parardelistar">Parar de listar</button>
-        </div>
         <div class="content">
             <div class="lua-efeito"></div>
         </div>
+
         <ul id="minhalista"></ul>
     </div>
 
@@ -34,11 +43,11 @@
         <p>© 2025 Trabalho de Frameworks - Nicole Roos e Amanda Miranda.</p>
     </div>
 
+    <!-- Scripts -->
     <script>
         const container = document.getElementById('container');
         const numEstrelas = 150;
 
-        // Criar estrelas no fundo
         for (let i = 0; i < numEstrelas; i++) {
             const estrela = document.createElement('div');
             estrela.classList.add('estrela');
@@ -50,70 +59,65 @@
     </script>
 
     <script>
-        // Função para buscar dados do servidor
         async function buscaDados() {
-    const resposta = await fetch("http://localhost:8000/Grimorio");
-    console.log(resposta);
+            const resposta = await fetch("http://localhost:8000/Grimorio");
 
-    if (resposta.status === 200) {
-        const dados = await resposta.json();
-        console.log(dados);
+            if (resposta.status === 200) {
+                const dados = await resposta.json();
 
-        const ul = document.getElementById("minhalista");
-        ul.innerHTML = `
-            <table class="tabela-magica">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Tipo de Ocorrência</th>
-                        <th>Lugar</th>
-                        <th>Data</th>
-                        <th>Entidades</th>
-                        <th>Atividade Paranormal</th>
-                        <th>Evidências</th>
-                        <th>Rituais</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="corpo-tabela"></tbody>
-            </table>
-        `;
+                const ul = document.getElementById("minhalista");
+                ul.innerHTML = `
+                    <table class="tabela-magica">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Tipo de Ocorrência</th>
+                                <th>Lugar</th>
+                                <th>Data</th>
+                                <th>Entidades</th>
+                                <th>Atividade Paranormal</th>
+                                <th>Evidências</th>
+                                <th>Rituais</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpo-tabela"></tbody>
+                    </table>
+                `;
 
-        const corpoTabela = document.getElementById("corpo-tabela");
+                const corpoTabela = document.getElementById("corpo-tabela");
 
-        // Adicionar as linhas na tabela
-        for (let i = 0; i < dados.length; i++) {
-            const element = dados[i];
-            const linha = document.createElement("tr");
-            linha.innerHTML = `
-                <td>${element.id}</td>
-                <td>${element.Nome}</td>
-                <td>${element.Tipodeocorrencia}</td>
-                <td>${element.lugar}</td>
-                <td>${new Date(element.Datadoevento).toLocaleDateString()}</td>
-                <td>${element.EntidadesEnvolvidas}</td>
-                <td>${element.Niveldeatividadeparanormal}</td>
-                <td>${element.Evidencias}</td>
-                <td>${element.RituaisRealizados}</td>
-                <td>
-                    <button class="btn-excluir" onclick="excluirGrimorio(${element.id})">Excluir</button>
-                </td>
-            `;
-            corpoTabela.appendChild(linha);
+                for (let i = 0; i < dados.length; i++) {
+                    const element = dados[i];
+                    const linha = document.createElement("tr");
+                    linha.innerHTML = `
+                        <td>${element.id}</td>
+                        <td>${element.Nome}</td>
+                        <td>${element.Tipodeocorrencia}</td>
+                        <td>${element.lugar}</td>
+                        <td>${new Date(element.Datadoevento).toLocaleDateString()}</td>
+                        <td>${element.EntidadesEnvolvidas}</td>
+                        <td>${element.Niveldeatividadeparanormal}</td>
+                        <td>${element.Evidencias}</td>
+                        <td>${element.RituaisRealizados}</td>
+                        <td>
+                            <button class="btn-excluir" onclick="excluirGrimorio(${element.id})">Excluir</button>
+                        </td>
+                    `;
+                    corpoTabela.appendChild(linha);
+                }
+            } else if (resposta.status === 400) {
+                const dados = await resposta.json();
+                alert(dados.mensagem);
+            } else {
+                alert("ERRO NÃO IDENTIFICADO");
+            }
         }
-    } else if (resposta.status === 400) {
-        const dados = await resposta.json();
-        alert(dados.mensagem);
-    } else {
-        alert("ERRO NÃO IDENTIFICADO");
-    }
-}
 
-// Função para excluir o Grimório
         function excluirGrimorio(id) {
-            const confirmar = confirm("Tem certeza que deseja excluir este grimório? após excluir não é possivel recupera-los");
-            if (!confirmar) return
+            const confirmar = confirm("Tem certeza que deseja excluir este grimório? Após excluir não é possível recuperá-los.");
+            if (!confirmar) return;
             fetch(`http://localhost:8000/Grimorio/${id}`, {
                 method: "DELETE"
             })
@@ -123,22 +127,19 @@
             })
             .then(data => {
                 alert(data.mensagem);
-                // Atualiza a lista ou recarrega a página
-                location.reload(); // ou alguma função para atualizar a lista
+                location.reload();
             })
             .catch(error => {
                 console.error(error);
                 alert("Erro ao excluir grimório.");
             });
-}
+        }
 
-        // Função para parar de listar
         function pararDeListar() {
             const ul = document.getElementById("minhalista");
             ul.innerHTML = '';
         }
 
-        // Eventos dos botões
         document.getElementById("botaoListar").addEventListener("click", buscaDados);
         document.getElementById("parardelistar").addEventListener("click", pararDeListar);
     </script>

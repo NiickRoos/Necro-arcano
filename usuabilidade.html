@@ -5,48 +5,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informações de Uso</title>
+    <link rel="stylesheet" href="usuabilidade.css">
 </head>
 
 <body>
 
+  
+    <!-- Barra de Navegação -->
+    <nav>
+        <div class="cabecalho">Grimório</div>
+        <ul>
+            <li><a href="usuabilidade.html">Bem-vindo</a></li>
+            <li><a href="listagem.html">Ver grimorios</a></li>
+            <li><a href="cadastro.html">Adicionar grimorios</a></li>
+            <li><a href="#lembretes">Lembretes</a></li>
+        </ul>
+    </nav>
+
+    <!-- Cabeçalho -->
     <header>
-        <h1>Informações de Uso</h1>
+        <h1>Regras!</h1>
+
     </header>
 
     <main>
-        <section>
+        <section id="bemvindo">
             <h2>Bem-vindo(a) viajante!</h2>
-            <p> Essa pagina é dedicada para seus registros sobrenaturais ao redor do mundo, muito cuidado em lista-las, pois ele está de olho em você</p>
+            <p>Essa página é dedicada para seus registros sobrenaturais ao redor do mundo. Muito cuidado ao listá-los,
+                pois <strong>ele</strong> está de olho em você...</p>
         </section>
 
-        <section>
+        <section id="excluir">
             <h2>Como Excluir um Grimório</h2>
-            <p>Para excluir um Grimório, basta clicar no botão de excluir ao lado do registro desejado. Um aviso de confirmação aparecerá para garantir que você realmente deseja excluir a informação,
-                uma vez excluido, não é possivel recupera-los, já que ele se perde no vale dos registros esquecidos
-            </p>
+            <p>Para excluir um Grimório, basta clicar no botão de excluir ao lado do registro desejado. Um aviso de
+                confirmação aparecerá. Uma vez excluído, não é possível recuperá-lo, pois ele se perde no vale dos
+                registros esquecidos...</p>
         </section>
 
-        <section>
+        <section id="funcionalidades">
             <h2>Funcionalidades</h2>
             <ul>
                 <li><strong>Listar Grimórios:</strong> Exibe uma lista de todas as ocorrências registradas no sistema.</li>
                 <li><strong>Cadastrar Grimório:</strong> Permite adicionar novas ocorrências ao sistema.</li>
                 <li><strong>Excluir Grimório:</strong> Exclui uma ocorrência do sistema após confirmação.</li>
-
             </ul>
+        </section>
+
+        <section id="lembretes">
             <h2>Lembretes</h2>
             <ul>
-                <li> nós não temos acesso a nenhum tipo de ocorrencia escrita em seu Grimorio, então não nos responsabilizamos
-                    por ocorrências que ferem a condulda dos diretos não-humanos 
-                </li>
+                <li>Não temos acesso a nenhum tipo de ocorrência escrita em seu Grimório, Não nos responsabilizamos
+                    por registros que ferem a conduta dos direitos dos não vivos.</li>
             </ul>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Grimório - Todos os direitos reservados.</p>
+        <p>&copy; 2025 Grimório - Todos os direitos reservados ao desconhecido.</p>
     </footer>
-
+    <script>
+           window.onload = function () {
+            alert("Bem-vindo(a) ao Grimório! Registre com sabedoria... ele está observando.");
+        };
+    </script>
 </body>
 
 </html>
