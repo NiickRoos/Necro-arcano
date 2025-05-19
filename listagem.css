@@ -291,27 +291,52 @@ nav ul li a:hover {
     top: 0;
     left: 0;
     width: 180px;
-    height: 100%;
+    height: 100vh;
     background-color: #000000;
-    border-right: 2px solid red;
-    padding: 20px 10px;
+    
+    
+    border: none;
+
+    /* alinhamento e espaçamento */
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding-top: 350px; /* move os botões mais para baixo */
     gap: 20px;
+
+    /* responsividade */
     z-index: 1000;
 }
 
 .sidebar button {
+    width: 140px;
     padding: 10px;
     font-size: 14px;
-    background-color: #222;
+    border: none;
+    border-radius: 8px;
+    background-color: #000000;
     color: white;
-    border: 1px solid red;
-    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s;
 }
 
 .sidebar button:hover {
     background-color: #000000;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        justify-content: center;
+        padding: 20px 10px;
+    }
+
+    .sidebar button {
+        width: auto;
+        margin: 0 5px;
+    }
 }

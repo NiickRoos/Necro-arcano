@@ -4,36 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro Grimorio</title>
+    <title>Cadastro Grimório</title>
     <link rel="stylesheet" href="cadastro.css">
 </head>
 
 <body>
+
     <a href="listagem.html" class="botao-voltar">Voltar</a>
+
     <div class="container" id="estrelas-container"></div>
-    <form onsubmit="event.preventDefault();trataform()">
+
+    <form onsubmit="event.preventDefault(); trataform()">
         <label for="id">ID</label>
-        <input type="text" id="id" name="id">        
+        <input type="text" id="id" name="id">
+
         <label for="Nome">Nome</label>
         <input type="text" id="Nome" name="Nome">
-        <label for="Tipodeocorrencia">Tipo de ocorrencia</label>
+
+        <label for="Tipodeocorrencia">Tipo de ocorrência</label>
         <input type="text" id="Tipodeocorrencia" name="Tipo de ocorrencia">
+
         <label for="Datadoevento">Data do evento</label>
         <input type="text" id="Datadoevento" name="Data do evento">
-        <label for="lugar">lugar</label>
+
+        <label for="lugar">Lugar</label>
         <input type="text" id="lugar" name="lugar">
+
         <label for="EntidadesEnvolvidas">Entidades envolvidas</label>
         <input type="text" id="EntidadesEnvolvidas" name="Entidades envolvidas">
-        <label for="Niveldeatividadeparanormal">Nivel de atividade paranormal</label>
+
+        <label for="Niveldeatividadeparanormal">Nível de atividade paranormal</label>
         <input type="text" id="Niveldeatividadeparanormal" name="Nivel de atividade paranormal">
-        <label for="Evidencias">Evidencias</label>
+
+        <label for="Evidencias">Evidências</label>
         <input type="text" id="Evidencias" name="Evidencias">
+
         <label for="RituaisRealizados">Rituais realizados</label>
         <input type="text" id="RituaisRealizados" name="Rituais realizados">
+
         <input type="submit" value="Cadastrar">
+        
     </form>
+
     <script>
-            async function trataform() {
+
+        async function trataform() {
             const inputId = document.getElementById("id");
             const inputNome = document.getElementById("Nome");
             const inputTipodeocorrencia = document.getElementById("Tipodeocorrencia");
@@ -44,65 +59,53 @@
             const inputEvidencias = document.getElementById("Evidencias");
             const inputRituaisRealizados = document.getElementById("RituaisRealizados");
 
-            const id = inputId.value;
-            const Nome = inputNome.value;
-            const Tipodeocorrencia = inputTipodeocorrencia.value;
-            const Datadoevento = inputDatadoevento.value;
-            const lugar = inputlugar.value;
-            const EntidadesEnvolvidas = inputEntidadesEnvolvidas.value;
-            const Niveldeatividadeparanormal = inputNiveldeatividadeparanormal.value;
-            const Evidencias = inputEvidencias.value;
-            const RituaisRealizados = inputRituaisRealizados.value;
-
             const objGrimorio = {
-                id,
-                Nome,
-                Tipodeocorrencia,
-                Datadoevento,
-                lugar,
-                EntidadesEnvolvidas,
-                Niveldeatividadeparanormal,
-                Evidencias,
-                RituaisRealizados
+                id: inputId.value,
+                Nome: inputNome.value,
+                Tipodeocorrencia: inputTipodeocorrencia.value,
+                Datadoevento: inputDatadoevento.value,
+                lugar: inputlugar.value,
+                EntidadesEnvolvidas: inputEntidadesEnvolvidas.value,
+                Niveldeatividadeparanormal: inputNiveldeatividadeparanormal.value,
+                Evidencias: inputEvidencias.value,
+                RituaisRealizados: inputRituaisRealizados.value
             };
-            try{
-                const resposta = await fetch("http://localhost:8000/Grimorio",{
-                    headers:{
+
+            try {
+                const resposta = await fetch("http://localhost:8000/Grimorio", {
+                    headers: {
                         'Content-Type': 'application/json'
                     },
-                    method:"POST",
+                    method: "POST",
                     body: JSON.stringify(objGrimorio)
-                })
+                });
 
-                if(resposta.status===200){
-                    alert("Dados cadastrados com sucesso!!!")
+                if (resposta.status === 200) {
+                    alert("Dados cadastrados com sucesso!!!");
+                } else if (resposta.status === 400) {
+                    const dados = await resposta.json();
+                    alert(`Erro do lado do backend:\n${dados.mensagem}`);
+                } else if (resposta.status === 404) {
+                    alert("Erro não identificado.");
                 }
-                if(resposta.status===400){
-                    const dados = await resposta.json()
-                    alert(`Erro do lado do backend:"\n${dados.mensagem}`)
-                }
-                if(resposta.status===404){
-                    alert("Erro nao identificado.")
-                }
-            }catch(erro){
-                alert("Erro: Erro na requisicao do FETCH\n"+
-                 "Voce ligou o BACKEND com npm run dev???")
+            } catch (erro) {
+                alert("Erro: Erro na requisição do FETCH\n" +
+                    "Você ligou o BACKEND com 'npm run dev'?");
             }
         }
     </script>
+
     <script>
         const container = document.getElementById("estrelas-container");
         for (let i = 0; i < 200; i++) {
-          const estrela = document.createElement("div");
-          estrela.classList.add("estrela");
-          estrela.style.left = Math.random() * 200 + "vw";
-          estrela.style.top = Math.random() * 200 + "vh";
-          estrela.style.animationDuration = (5 + Math.random() * 5) + "s";
-          container.appendChild(estrela);
+            const estrela = document.createElement("div");
+            estrela.classList.add("estrela");
+            estrela.style.left = Math.random() * 200 + "vw";
+            estrela.style.top = Math.random() * 200 + "vh";
+            estrela.style.animationDuration = (5 + Math.random() * 5) + "s";
+            container.appendChild(estrela);
         }
-      </script>
-     
-      
+    </script>
 </body>
 
 </html>
