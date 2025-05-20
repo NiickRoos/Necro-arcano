@@ -15,7 +15,7 @@ body, html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #f1f1f1;
     padding-top: 80px; /* espaço para navbar fixa */
-    animation: fadeIn 1.5s ease-in;
+    
 }
 
 h1 {
@@ -47,7 +47,6 @@ nav {
     letter-spacing: 5px;
     font-family: 'Creepster', cursive, sans-serif;
     margin-bottom: 10px;
-    
 }
 
 nav ul {
@@ -79,7 +78,6 @@ nav ul li a:hover {
     color: #ff0000;
     padding: 40px 20px 20px;
     text-align: center;
-    
 }
 
 .cabecalho h1 {
@@ -113,7 +111,6 @@ nav ul li a:hover {
     z-index: 1;
 }
 
-/* Efeito ao passar o mouse */
 #botaoListar:hover, #parardelistar:hover {
     background-color: #000000;
     transform: scale(1.05);
@@ -122,20 +119,19 @@ nav ul li a:hover {
     text-shadow: 0 0 5px #ff0000;
 }
 
-/* Efeito ao clicar no botão */
 #botaoListar:active, #parardelistar:active {
     transform: scale(0.98);
     box-shadow: 0 0 25px rgba(255, 0, 0, 0.9);
     transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
-/* Efeito de foco para acessibilidade */
 #botaoListar:focus, #parardelistar:focus {
     outline: none;
     border: 2px solid #ff0000;
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
 }
 
+/* Conteúdo principal */
 .content {
     margin-top: 40px;
     display: flex;
@@ -199,7 +195,7 @@ nav ul li a:hover {
     animation: fadeIn 2s ease-in;
 }
 
-/* Ajuste da altura da tabela e rolagem */
+/* Tabela */
 #minhalista {
     margin-top: 30px;
     padding: 15px;
@@ -223,8 +219,8 @@ nav ul li a:hover {
     box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
     color: #f0e6e6;
     font-family: 'Creepster', cursive, sans-serif;
-    max-height: calc(100vh - 180px); /* Define altura máxima considerando navbar e rodapé */
-    overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
+    max-height: calc(100vh - 180px);
+    overflow-y: auto;
 }
 
 .tabela-magica th, .tabela-magica td {
@@ -254,7 +250,7 @@ nav ul li a:hover {
     transition: 0.3s;
 }
 
-/* Ajuste para telas menores */
+/* Responsividade */
 @media screen and (max-width: 768px) {
     .tabela-magica {
         font-size: 12px;
@@ -268,63 +264,18 @@ nav ul li a:hover {
 
 /* Animações */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes slideDown {
-    from {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 180px;
-    height: 100vh;
-    background-color: #000000;
-    
-    
-    border: none;
-
-    /* alinhamento e espaçamento */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 350px; /* move os botões mais para baixo */
-    gap: 20px;
-
-    /* responsividade */
-    z-index: 1000;
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-.sidebar button {
-    width: 140px;
-    padding: 10px;
-    font-size: 14px;
-    border: none;
-    border-radius: 8px;
-    background-color: #000000;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s;
-}
 
-.sidebar button:hover {
-    background-color: #000000;
-}
 
-/* Responsividade para telas menores */
+/* Responsividade para sidebar */
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;
