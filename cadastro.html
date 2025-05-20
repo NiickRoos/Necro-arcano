@@ -15,8 +15,6 @@
     <div class="container" id="estrelas-container"></div>
 
     <form onsubmit="event.preventDefault(); trataform()">
-        <label for="id">ID</label>
-        <input type="text" id="id" name="id">
 
         <label for="Nome">Nome</label>
         <input type="text" id="Nome" name="Nome">
@@ -51,7 +49,7 @@
     <script>
 
         async function trataform() {
-            const inputId = document.getElementById("id");
+           
             const inputNome = document.getElementById("Nome");
             const inputTipodeocorrencia = document.getElementById("Tipodeocorrencia");
             const inputDatadoevento = document.getElementById("Datadoevento");
@@ -79,7 +77,6 @@
 
         // Coleta os dados do formulário
         const objGrimorio = {
-            id: document.getElementById("id").value,
             Nome: document.getElementById("Nome").value,
             Tipodeocorrencia: document.getElementById("Tipodeocorrencia").value,
             Datadoevento: document.getElementById("Datadoevento").value,
@@ -108,7 +105,7 @@
                 alert("Erro não identificado.");
             }
         } catch (erro) {
-            alert("Erro: Erro na requisição do FETCH\nVocê ligou o BACKEND com 'npm run dev'?");
+            alert("Erro: Erro na requisição do FETCH\n Você ligou o BACKEND com 'npm run dev'?");
         }
     }
 </script>
