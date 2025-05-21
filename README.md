@@ -69,7 +69,7 @@ Evite registros que contrariem a ética sobrenatural e os direitos dos não vivo
 
 
 
-*Instruções para rodar o codigo localmente*
+#*Instruções para rodar o codigo localmente*#
 
 1-Baixe o projeto do GitHub e abra-o no Visual Studio Code.
 
