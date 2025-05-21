@@ -67,6 +67,8 @@ Todo conteúdo inserido é de responsabilidade do usuário.
 
 Evite registros que contrariem a ética sobrenatural e os direitos dos não vivos.
 
+
+
 *Instruções para rodar o codigo localmente*
 
 1-Baixe o projeto do GitHub e abra-o no Visual Studio Code.
@@ -88,6 +90,6 @@ Evite registros que contrariem a ética sobrenatural e os direitos dos não vivo
 9-Caso uma tela em branco com listagem de arquivos seja exibida, clique no arquivo usuabilidade.html para abrir a interface desejada.
 
 
-
+*Diagrama* 
 
 ![App Screenshot](https://i.imgur.com/w3pCaTi.jpeg)
