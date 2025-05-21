@@ -1,13 +1,14 @@
-Create database Grimorio;
-use  Grimorio;
-Create table informa(
-    ID INT AUTO_INCREMENT PRIMARY KEY,
-    Nome VARCHAR(255),
-    Tipo_de_Ocorrencia VARCHAR(255),
-    Lugar VARCHAR(255),
-    Data DATE,
-    Entidades VARCHAR(255),
-    Atividade_Paranormal VARCHAR(255),
-    Evidencias VARCHAR(255),
-    Rituais VARCHAR(255)    
+CREATE  database grimorio;
+use  grimorio;
+CREATE TABLE informa (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  Nome VARCHAR(255),
+  Tipodeocorrencia VARCHAR(255),
+  lugar VARCHAR(255),
+  Datadoevento DATE,
+  EntidadesEnvolvidas VARCHAR(255),
+  Niveldeatividadeparanormal VARCHAR(100),
+  Evidencias VARCHAR(255),
+  RituaisRealizados VARCHAR(255)
 );
+

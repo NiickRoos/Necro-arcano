@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Grimório</title>
     <link rel="stylesheet" href="cadastro.css">
+
 </head>
 
 <body>
@@ -43,8 +44,6 @@
         <input type="submit" value="Cadastrar">
         
     </form>
-    
-    
 
     <script>
 
@@ -64,18 +63,18 @@
     </script>
 
     <script>
+
     async function trataform() {
-        // Validação dos campos
+
         const campos = document.querySelectorAll("form input[type='text']");
         for (let campo of campos) {
             if (campo.value.trim() === "") {
                 alert(`O campo "${campo.previousElementSibling.textContent}" está vazio. Por favor, preencha todos os campos.`);
                 campo.focus();
-                return; // Encerra se encontrar campo vazio
+                return; 
             }
         }
-
-        // Coleta os dados do formulário
+        
         const objGrimorio = {
             Nome: document.getElementById("Nome").value,
             Tipodeocorrencia: document.getElementById("Tipodeocorrencia").value,
@@ -108,10 +107,11 @@
             alert("Erro: Erro na requisição do FETCH\n Você ligou o BACKEND com 'npm run dev'?");
         }
     }
+
 </script>
 
-
     <script>
+
         const container = document.getElementById("estrelas-container");
         for (let i = 0; i < 200; i++) {
             const estrela = document.createElement("div");
@@ -121,9 +121,8 @@
             estrela.style.animationDuration = (5 + Math.random() * 5) + "s";
             container.appendChild(estrela);
         }
+        
     </script>
-
-
     
 </body>
 
