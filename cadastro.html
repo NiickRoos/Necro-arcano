@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Grimório</title>
+    <link rel="stylesheet" href="cadastro.css">
+
+</head>
+
+<body>
+
+    <a href="listagem.html" class="botao-voltar">Voltar</a>
+
+    <div class="container" id="estrelas-container"></div>
+
+    <form onsubmit="event.preventDefault(); trataform()">
+
+        <label for="Nome">Nome</label>
+        <input type="text" id="Nome" name="Nome">
+
+        <label for="Tipodeocorrencia">Tipo de ocorrência</label>
+        <input type="text" id="Tipodeocorrencia" name="Tipo de ocorrencia">
+
+        <label for="Datadoevento">Data do evento</label>
+        <input type="text" id="Datadoevento" name="Data do evento">
+
+        <label for="lugar">Lugar</label>
+        <input type="text" id="lugar" name="lugar">
+
+        <label for="EntidadesEnvolvidas">Entidades envolvidas</label>
+        <input type="text" id="EntidadesEnvolvidas" name="Entidades envolvidas">
+
+        <label for="Niveldeatividadeparanormal">Nível de atividade paranormal</label>
+        <input type="text" id="Niveldeatividadeparanormal" name="Nivel de atividade paranormal">
+
+        <label for="Evidencias">Evidências</label>
+        <input type="text" id="Evidencias" name="Evidencias">
+
+        <label for="RituaisRealizados">Rituais realizados</label>
+        <input type="text" id="RituaisRealizados" name="Rituais realizados">
+
+        <input type="submit" value="Cadastrar">
+        
+    </form>
+
+    <script>
+
+        async function trataform() {
+           
+            const inputNome = document.getElementById("Nome");
+            const inputTipodeocorrencia = document.getElementById("Tipodeocorrencia");
+            const inputDatadoevento = document.getElementById("Datadoevento");
+            const inputlugar = document.getElementById("lugar");
+            const inputEntidadesEnvolvidas = document.getElementById("EntidadesEnvolvidas");
+            const inputNiveldeatividadeparanormal = document.getElementById("Niveldeatividadeparanormal");
+            const inputEvidencias = document.getElementById("Evidencias");
+            const inputRituaisRealizados = document.getElementById("RituaisRealizados");
+
+        }
+        
+    </script>
+
+    <script>
+         
+  /*tratamento de erros*/
+    let envioEmAndamento = false;
+
+    async function trataform() {
+    if (envioEmAndamento) return;
+    envioEmAndamento = true;
+
+    const campos = document.querySelectorAll("form input[type='text'], form input[type='date']");
+    for (let campo of campos) {
+        if (campo.value.trim() === "") {
+            alert(`O campo "${campo.previousElementSibling.textContent}" está vazio. Por favor, preencha todos os campos.`);
+            campo.focus();
+            envioEmAndamento = false;
+            return;
+        }
+    }
+
+    const objGrimorio = {
+        Nome: document.getElementById("Nome").value,
+        Tipodeocorrencia: document.getElementById("Tipodeocorrencia").value,
+        Datadoevento: document.getElementById("Datadoevento").value,
+        lugar: document.getElementById("lugar").value,
+        EntidadesEnvolvidas: document.getElementById("EntidadesEnvolvidas").value,
+        Niveldeatividadeparanormal: document.getElementById("Niveldeatividadeparanormal").value,
+        Evidencias: document.getElementById("Evidencias").value,
+        RituaisRealizados: document.getElementById("RituaisRealizados").value
+    };
+
+    try {
+        const resposta = await fetch("http://localhost:8000/Grimorio", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify(objGrimorio)
+        });
+
+        if (resposta.status === 200) {
+            alert("Dados cadastrados com sucesso!!!");
+            document.querySelector("form").reset();
+            envioEmAndamento = false;
+        } else if (resposta.status === 400) {
+            const dados = await resposta.json();
+            alert(`Erro do lado do backend:\n${dados.mensagem}`);
+            envioEmAndamento = false;
+        } else if (resposta.status === 404) {
+            alert("Erro não identificado.");
+            envioEmAndamento = false;
+        }
+    } catch (erro) {
+        alert("Erro: Erro na requisição do FETCH\nVocê ligou o BACKEND com 'npm run dev'?");
+        envioEmAndamento = false;
+    }
+}
+</script>
+
+    <script>
+
+        const container = document.getElementById("estrelas-container");
+        for (let i = 0; i < 200; i++) {
+            const estrela = document.createElement("div");
+            estrela.classList.add("estrela");
+            estrela.style.left = Math.random() * 200 + "vw";
+            estrela.style.top = Math.random() * 200 + "vh";
+            estrela.style.animationDuration = (5 + Math.random() * 5) + "s";
+            container.appendChild(estrela);
+        }
+        
+    </script>
+    
+</body>
+
+</html>
