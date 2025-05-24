@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
@@ -12,9 +11,7 @@
 <body>
 
     <a href="listagem.html" class="botao-voltar">Voltar</a>
-
     <div class="container" id="estrelas-container"></div>
-
     <form onsubmit="event.preventDefault(); trataform()">
 
         <label for="Nome">Nome</label>
@@ -24,7 +21,7 @@
         <input type="text" id="Tipodeocorrencia" name="Tipo de ocorrencia">
 
         <label for="Datadoevento">Data do evento</label>
-        <input type="text" id="Datadoevento" name="Data do evento">
+        <input type="date" id="Datadoevento" name="Data do evento">
 
         <label for="lugar">Lugar</label>
         <input type="text" id="lugar" name="lugar">
@@ -61,64 +58,85 @@
         }
         
     </script>
-
-    <script>
-         
-  /*tratamento de erros*/
+<script>
+    /* tratamento de erros */
     let envioEmAndamento = false;
 
     async function trataform() {
-    if (envioEmAndamento) return;
-    envioEmAndamento = true;
+        if (envioEmAndamento) return;
+        envioEmAndamento = true;
 
-    const campos = document.querySelectorAll("form input[type='text'], form input[type='date']");
-    for (let campo of campos) {
-        if (campo.value.trim() === "") {
-            alert(`O campo "${campo.previousElementSibling.textContent}" está vazio. Por favor, preencha todos os campos.`);
-            campo.focus();
+        // Verifica se todos os campos estão preenchidos
+        const campos = document.querySelectorAll("form input[type='text'], form input[type='date']");
+        for (let campo of campos) {
+            if (campo.value.trim() === "") {
+                alert(`O campo "${campo.previousElementSibling.textContent}" está vazio. Por favor, preencha todos os campos.`);
+                campo.focus();
+                envioEmAndamento = false;
+                return;
+            }
+        }
+
+        // Campos que não podem conter números
+        const camposSemNumeros = [
+            "Nome",
+            "Tipodeocorrencia",
+            "lugar",
+            "EntidadesEnvolvidas",
+            "Evidencias",
+            "RituaisRealizados"
+        ];
+
+        for (let idCampo of camposSemNumeros) {
+            const valor = document.getElementById(idCampo).value;
+            if (/\d/.test(valor)) {  // verifica se tem algum dígito
+                alert(`O campo "${document.querySelector(`label[for="${idCampo}"]`).textContent}" não pode conter números.`);
+                document.getElementById(idCampo).focus();
+                envioEmAndamento = false;
+                return;
+            }
+        }
+
+        // Se passou nas validações, cria o objeto para envio
+        const objGrimorio = {
+            Nome: document.getElementById("Nome").value,
+            Tipodeocorrencia: document.getElementById("Tipodeocorrencia").value,
+            Datadoevento: document.getElementById("Datadoevento").value,
+            lugar: document.getElementById("lugar").value,
+            EntidadesEnvolvidas: document.getElementById("EntidadesEnvolvidas").value,
+            Niveldeatividadeparanormal: document.getElementById("Niveldeatividadeparanormal").value,
+            Evidencias: document.getElementById("Evidencias").value,
+            RituaisRealizados: document.getElementById("RituaisRealizados").value
+        };
+
+        try {
+            const resposta = await fetch("http://localhost:8000/Grimorio", {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify(objGrimorio)
+            });
+
+            if (resposta.status === 200) {
+                alert("Dados cadastrados com sucesso!!!");
+                document.querySelector("form").reset();
+                envioEmAndamento = false;
+            } else if (resposta.status === 400) {
+                const dados = await resposta.json();
+                alert(`Erro do lado do backend:\n${dados.mensagem}`);
+                envioEmAndamento = false;
+            } else if (resposta.status === 404) {
+                alert("Erro não identificado.");
+                envioEmAndamento = false;
+            }
+        } catch (erro) {
+            alert("Erro: Erro na requisição do FETCH\nVocê ligou o BACKEND com 'npm run dev'?");
             envioEmAndamento = false;
-            return;
         }
     }
-
-    const objGrimorio = {
-        Nome: document.getElementById("Nome").value,
-        Tipodeocorrencia: document.getElementById("Tipodeocorrencia").value,
-        Datadoevento: document.getElementById("Datadoevento").value,
-        lugar: document.getElementById("lugar").value,
-        EntidadesEnvolvidas: document.getElementById("EntidadesEnvolvidas").value,
-        Niveldeatividadeparanormal: document.getElementById("Niveldeatividadeparanormal").value,
-        Evidencias: document.getElementById("Evidencias").value,
-        RituaisRealizados: document.getElementById("RituaisRealizados").value
-    };
-
-    try {
-        const resposta = await fetch("http://localhost:8000/Grimorio", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify(objGrimorio)
-        });
-
-        if (resposta.status === 200) {
-            alert("Dados cadastrados com sucesso!!!");
-            document.querySelector("form").reset();
-            envioEmAndamento = false;
-        } else if (resposta.status === 400) {
-            const dados = await resposta.json();
-            alert(`Erro do lado do backend:\n${dados.mensagem}`);
-            envioEmAndamento = false;
-        } else if (resposta.status === 404) {
-            alert("Erro não identificado.");
-            envioEmAndamento = false;
-        }
-    } catch (erro) {
-        alert("Erro: Erro na requisição do FETCH\nVocê ligou o BACKEND com 'npm run dev'?");
-        envioEmAndamento = false;
-    }
-}
 </script>
+
 
     <script>
 
@@ -136,4 +154,4 @@
     
 </body>
 
-</html>
+</html> 
